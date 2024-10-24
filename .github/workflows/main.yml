@@ -30,6 +30,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Modify base in vite.config.js
+        run: |
+          sed -i "s|base: '/'|base: '/${{ github.repository }}/'|" vite.config.js
+
       - name: Build
         run: npm run build
 
