@@ -1,0 +1,44 @@
+name: Pull, Build, and Deploy to GitHub Pages
+
+permissions:
+  contents: write
+  pages: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    permissions:
+      contents: write
+      pages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup
+        run: |
+          rm -rf dist
+      - name: Checkout private repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.TARGET_REPO }}
+          ref: ${{ secrets.TARGET_BRANCH }} # Set the default branch or the specific branch you want to pull from
+          token: ${{ secrets.TOKEN }}  # Store PAT in GitHub secrets
+
+      # Step 3: Install dependencies for the private repository
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to gh-pages
+        run: |
+          cd dist
+          ln -s index.html 404.html  # Symlink index.html to 404.html for better SPA support
+          git config --global user.email "Autobuild@botsrule.usall"
+          git config --global user.name "Autobot Unite"
+          git add -A
+          git commit -m 'Auto pages build'
+          git push -f https://${{ secrets.TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
