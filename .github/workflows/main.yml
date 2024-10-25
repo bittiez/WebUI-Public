@@ -39,7 +39,7 @@ jobs:
       - name: Modify base in vite.config.js
         run: |
           sed -i "s|base: '/'|base: '/WebUI-Public/'|" vite.config.js
-          sed -i "s|http://localhost:8686|https://webui-test.ddns.net|" config.js
+          sed -i "s|http://localhost:8686|https://webui-test.ddns.net|" src/config.js
 
       - name: Build
         run: npm run build
