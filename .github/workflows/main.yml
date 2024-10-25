@@ -3,6 +3,7 @@ name: Pull, Build, and Deploy to GitHub Pages
 permissions:
   contents: write
   pages: write
+  id-token: write
 
 on:
   push:
