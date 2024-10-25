@@ -38,7 +38,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to gh-pages
+      - name: Push to gh-pages
         run: |
           cd dist
           cp index.html 404.html  # Copy index.html to 404.html for better SPA support
@@ -49,3 +49,12 @@ jobs:
           git status
           git commit -m 'Auto pages build'
           git push -f https://${{ secrets.TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
