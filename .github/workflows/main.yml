@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to gh-pages
         run: |
           cd dist
-          ln -s index.html 404.html  # Symlink index.html to 404.html for better SPA support
+          cp index.html 404.html  # Copy index.html to 404.html for better SPA support
           git config --global user.email "Autobuild@botsrule.usall"
           git config --global user.name "Autobot Unite"
           git init
