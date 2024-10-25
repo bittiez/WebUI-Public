@@ -54,6 +54,9 @@ jobs:
           git commit -m 'Auto pages build'
           git push -f https://${{ secrets.TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
